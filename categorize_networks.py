@@ -9,15 +9,15 @@ def test_strong(rows):
     strong = 0
     strong_alone = 0
     for i, row in rows.iterrows():
-        if row.power_law_p_value >= 0.1 and row.alpha < 3 and row.alpha>2:
+        if row.power_law_p_value > 0.1 and row.alpha < 3 and row.alpha > 2:
             strong_alone += 1
-            if row.exponential_decision != 0 and row.lognormal_decision != 0 and row.truncated_power_law_decision != 0 and row.stretched_exponential_decision != 0:
+            if row.exponential_decision > -1 and row.lognormal_decision > -1 and row.truncated_power_law_decision > -1 and row.stretched_exponential_decision > -1:
                 strong +=1
-        if strong_alone >= 0.9*number_of_deg_seqs:
+    if strong_alone >= 0.9*number_of_deg_seqs:
             SA = True
-        if strong >= 0.5*number_of_deg_seqs:
+    if strong >= 0.5*number_of_deg_seqs:
             S2=True
-        if SA and strong >= 0.9*number_of_deg_seqs:
+    if SA and strong >= 0.9*number_of_deg_seqs:
             S1=True
     return (S1,S2)
 

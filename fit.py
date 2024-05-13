@@ -18,7 +18,7 @@ def fit_power_law_and_compare_with_alternative(x):
     R_power_stretched, p_power_stretched = fit.distribution_compare('power_law','stretched_exponential')
     stretched_exponential_decision = decide(R_power_stretched, p_power_stretched)
     R_power_truncated, p_power_truncated = fit.distribution_compare('power_law','truncated_power_law')
-    truncated_power_law_decision = decide(R_power_truncated, p_power_truncated)
+    truncated_power_law_decision = decide_nested_power(R_power_truncated, p_power_truncated)
     return fit.xmin, fit.alpha, fit.n_tail,ks, exponential_decision, lognormal_decision, stretched_exponential_decision, truncated_power_law_decision
 ## Function to run goodness of fit test on the power law fit and calculate p-value. Taken from the fit.py class in this repository: https://github.com/adbroido/SFAnalysis
 def power_law_pval(x, alpha, xmin, gof):
@@ -80,11 +80,20 @@ def power_law_pval(x, alpha, xmin, gof):
     return p
 
 def decide(R,p):
-    if p < 0.1:
+    if p <= 0.1:
         if R > 0:
-            decision = 0
+            decision = 1
+        elif R< 0:
+            decision = -1
         else:
-            decision =1
+            decision = 0
     else:
-        decision=-1
+        decision=0
+    return decision
+
+def decide_nested_power(R,p):
+    if p <= 0.1 and R < 0 :
+        decision = -1
+    else:
+        decision = 0
     return decision

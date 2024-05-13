@@ -12,7 +12,7 @@ def analyze_deg_sequences(deg_sequences_path):
             file_path_list.append(os.path.join(root,file_name))
     for file_path in file_path_list:
         print("File Path is: "+file_path)
-        network_name = file_path.split("/")[-1].split(".")[0]
+        network_name = file_path.split("\\")[-1].split(".")[0]
         print("network name is: "+network_name)
         deg_seq = im.read_deg_seq(file_path)
         mean_degree = np.mean(deg_seq)
